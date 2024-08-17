@@ -4,3 +4,9 @@ h1, p {
 body {
     background-color: bisque;
 }
+#menu {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    background-color: burlywood;
+}
