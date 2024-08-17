@@ -3,6 +3,7 @@ h1, h2, p {
 }
 body {
     background-color: bisque;
+    font-family: sans-serif;
 }
 .menu {
     margin-left: auto;
