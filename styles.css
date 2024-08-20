@@ -3,7 +3,7 @@ h1, h2, p {
 }
 
 body {
-    background-color: linear-gradient(0deg, burlywood, white, burlywood);
+    background-color: linear-gradient(90deg, burlywood, white, burlywood);
     font-family: sans-serif;
 }
 
