@@ -11,5 +11,5 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 80%;
-    background-color: linear-gradient(90deg, burlywood, white, burlywood);
+    background: linear-gradient(90deg, burlywood, white, burlywood);
 }
