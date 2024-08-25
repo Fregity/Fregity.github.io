@@ -8,13 +8,6 @@ header {
     background-color: #f4f4f4;
 }
 
-header img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
 section {
     margin: 20px;
 }
