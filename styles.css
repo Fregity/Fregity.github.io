@@ -36,3 +36,21 @@ footer {
     text-align: center;
     padding: 10px;
 }
+
+
+/* start of links styling */
+
+a:link, a:visited {
+    background-color: white;
+    color: black;
+    padding: 15px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  a:hover, a:active {
+    background-color: black;
+  }
+
+/* end of links styling */
