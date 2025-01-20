@@ -40,6 +40,12 @@ footer {
 
 /* start of links styling */
 
+a:visited a:hover {
+    color: #0000FF;
+    background-color: transparent;
+    text-decoration: none;
+}
+
 .button {
     border: none;
     color: white;
