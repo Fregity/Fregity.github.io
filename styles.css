@@ -4,7 +4,8 @@ body {
 
 header {
     text-align: center;
-    padding: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
     background-color: #f4f4f4;
 }
 
