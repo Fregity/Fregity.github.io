@@ -38,7 +38,7 @@ footer {
     padding: 10px;
 }
 
-#center {
+#center, #info {
     text-align: center;
 }
 
