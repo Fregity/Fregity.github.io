@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>Anthony Clicker</title>
 	<link href="anthony.css" rel="stylesheet"/>
 </head>
-
 <body onload='update();'>
-	<div id = 'uprow'><img src = 'pictures/anthony.jpg' id = 'clickericon' width = '200' height = '200'> </img></div> <!--i'll update the size, u dont have to-->
+	<h1>Anthony Clicker V 0.1.3</h1>
+	<div id="timePlayed">Time Wasted: 0m 0s</div> <br>
+	<div id = 'uprow'><img src = 'pictures/anthony.jpg' id = 'clickericon' width = '250' height = '250'> </img></div>
     
-<div id = 'u'> </div> <br>
-<div id = 'ups'> </div><br>
-<div id = 'upc'> </div><br>
-    <button onclick = 'moreUPC();'>More Farts Per Click</button> <br>
-    <button onclick = 'moreUPS();'>More Farts Per Second</button>
+<div id = 'farts'> </div> <br>
+<div id = 'fps'> </div><br>
+<div id = 'fpc'> </div><br>
+    <button id="buyFpcBtn" onclick = 'buyFpc();'>Buy placeholder (Farts per click)</button> <br>
+    <button id="buyBurritoBtn" onclick = 'buyBurrito();'>Buy Burrito (Farts per second)</button> <br>
+	<button id="buyToiletBtn" onclick = "buyToilet();">Buy Toilet (FPS)</button>
     <script src="script.js"></script>
   </body>
 </html>
