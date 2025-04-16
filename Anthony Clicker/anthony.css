@@ -1,53 +1,76 @@
-* {
+body {
     text-align: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 25px;
-    font-weight: 5px;
+    font-size: 20px;
+    font-weight: 3px;
 }
+
+#iconChange {
+  margin-right: 200px;
+}
+
 #clickericon{
   text-align: center;
   border-radius: 10px;
   cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease;
 }
-/* From Uiverse.io by alexroumi */ 
-button {
-  padding: 15px 25px;
-  border: unset;
-  border-radius: 15px;
-  color: #212121;
-  z-index: 1;
-  background: #e8e8e8;
-  position: relative;
-  font-weight: 1000;
-  font-size: 17px;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 200ms;
-  overflow: hidden;
+
+h1 {
+  font-size: 25px;
+  font-weight: 5px;
 }
-  
-button::before {
-  content: "";
+
+/* buttons */ 
+button.styled {
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  font-size: 1.5rem;
+}
+button.styled:hover {
+  transform: scale(1.1);
+}
+.mute-btn {
+  top: 10px;
+  left: 10px;
+}
+.icon-btn {
+  font-size: 1.2rem !important; 
+}
+.building {
+  margin-right: 10px;
+}
+/* end buttons */
+
+#upgradesMenuWrapper {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 15px;
-  background-color: #212121;
-  z-index: -1;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms
+  top: 5px;
+  right: 35px;
+  text-align: right;
+  z-index: 10;
 }
 
-button:hover {
-  color: #e8e8e8;
+/* building fade-in */
+
+.hidden {
+  display: none !important;
 }
 
-button:hover::before {
-  width: 100%;
+.fade-in {
+  display: inline-block;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
 }
-/* end button */
 
-  
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* end building fade-in */

@@ -4,14 +4,32 @@ PATCH (0.0.x): Bug fixes or tiny changes (eg, balancing prices, fixing typos)
 MINOR (0.x.0): New features or improvements (eg, added a new building or upgrade)
 MAJOR (x.0.0): Big overhauls or breaking changes (eg, major UI change or game mechanics revamp)
 
-v0.0.5 first version
+4/11/25
+v0.0.1 first version
 
-v0.0.6 updated buttons and changed name of buildings\
+v0.0.2 updated buttons and changed name of buildings
 
 v0.1.0 minor change on how the scaling of prices works
 
-v0.1.1 mini fix of broken ups returning NaN
+v0.1.1 mini fix of broken FPS returning NaN
 
 v0.1.2 fixed big error with incorrect variables and added toilet
 
 v0.1.3 added time played counter
+
+4/12/25
+v0.1.4 added cycle anthony button and moved the info to the right
+
+v0.1.5 changed the way anthony jiggles
+
+v0.1.6 made fart sounds on click
+
+v0.1.7 made toilet button fade in
+
+v0.1.8 changed ammount that buildings give to slow gameplay down
+
+4/15/25
+
+v0.2.0 created upgrades menu
+
+v0.2.1 minor ui changes and consistency between buttons
