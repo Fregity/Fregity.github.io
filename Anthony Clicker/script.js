@@ -34,7 +34,7 @@ let bathroomMultiplier = 1;
 // updates ui of current values
 function update() {
   document.getElementById('farts').innerHTML = "Farts: "+farts.toString();
-  let fps = (getProductionAmount("burrito") + getProductionAmount("toilet") + getProductionAmount("bathroom")) * globalProductionMultiplier;
+  fps = (getProductionAmount("burrito") + getProductionAmount("toilet") + getProductionAmount("bathroom")) * globalProductionMultiplier;
   document.getElementById('fpc').innerHTML = "Farts per Click: " + fpc;
   document.getElementById('fps').innerHTML = "Farts per Second: " + fps;
   document.getElementById('buyFpcBtn').innerText = `Buy (Placeholder) (${costOfFpc} farts)`;
@@ -170,33 +170,56 @@ function cycleImage() {
   document.getElementById('clickericon').src = imageSources[currentImageIndex];
 }
 
-
 // golden ball
 function spawnGoldenBall() {
-	const goldenBall = document.getElementById('goldenBall');
-	const maxX = window.innerWidth - 60;
-	const maxY = window.innerHeight - 60;
-	const x = Math.random() * maxX;
-	const y = Math.random() * maxY;
+  const goldenBall = document.getElementById('goldenBall');
+  const maxX = window.innerWidth - 60;
+  const maxY = window.innerHeight - 60;
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
 
-	goldenBall.style.left = `${x}px`;
-	goldenBall.style.top = `${y}px`;
-	goldenBall.classList.remove('hidden');
+  goldenBall.style.left = `${x}px`;
+  goldenBall.style.top = `${y}px`;
+  goldenBall.classList.remove('hidden', 'spin');
+  goldenBall.classList.add('show', 'spin');
 
-	setTimeout(() => {
-		goldenBall.classList.add('hidden');
-	}, 10000); // disappears after 10 seconds if not clicked
-} 
-function activateGoldenBall() { // when clicked
-	document.getElementById('bowlingSound').play();
-	document.getElementById('goldenBall').classList.add('hidden');
+  // Fade out after 10s
+  setTimeout(() => {
+    goldenBall.classList.remove('show', 'spin');
+  }, 10000);
 
-	const boostType = Math.random();
-	if (boostType < 0.2) {
-		activateProductionBoost();
-	} else {
-		giveFartBonus();
-	}
+  // Hide fully after fade-out completes
+  setTimeout(() => {
+    goldenBall.classList.add('hidden');
+  }, 10500);
+}
+
+
+function activateGoldenBall() { // When clicked
+  document.getElementById('bowlingSound').play();
+  document.getElementById('goldenBall').classList.add('hidden');
+  
+  if (Math.random() < 0.2) {
+    activateProductionBoost();
+    showBonusText("🔥 3x Production Boost!");
+  } else {
+    giveFartBonus();
+    showBonusText("💨 Bonus Farts!");
+  }
+}
+function showBonusText(message) {
+  const bonusText = document.getElementById('bonusText');
+  bonusText.textContent = message;
+
+  // Fade in
+  bonusText.classList.remove('hidden'); // Ensure it's visible before fading in
+  bonusText.classList.remove('fade-out'); // Ensure it's not fading out before
+  bonusText.classList.add('show'); // Trigger the fade-in
+
+  // Fade out after a short delay
+  setTimeout(() => {
+    bonusText.classList.add('fade-out'); // Start fading out
+  }, 2000); // Fade out after 2 seconds
 }
 function activateProductionBoost() {
   globalProductionMultiplier = 3;
@@ -214,7 +237,7 @@ function giveFartBonus() {
 }
 
 function scheduleGoldenBall() {
-  const delay = 180000 + Math.random() * 120000; // 3 to 5 minutes
+  const delay = 1000 + Math.random() * 12000; // 3 to 5 minutes 180000, 120000
   setTimeout(() => {
     spawnGoldenBall();
     scheduleGoldenBall(); // schedule next one after this
@@ -236,6 +259,7 @@ async function rec() {
 function checkToiletUnlock() {
   const toiletBtn = document.getElementById("buyToiletBtn");
   if (totalFarts >= 7500 && toiletBtn.classList.contains("hidden")) {
+    toiletBtn.style.display = 'inline-block';
     toiletBtn.classList.remove("hidden");
     toiletBtn.classList.add("fade-in");
   }
@@ -243,6 +267,7 @@ function checkToiletUnlock() {
 function checkBathroomUnlock() {
   const bathroomBtn = document.getElementById("buyBathroomBtn");
   if (totalFarts >= 100000 && bathroomBtn.classList.contains("hidden")) {
+    bathroomBtn.style.display = 'inline-block';
     bathroomBtn.classList.remove("hidden");
     bathroomBtn.classList.add("fade-in");
   }
@@ -275,5 +300,7 @@ function increasePrice(which) {
 // Call update regularly
 setInterval(update, 1000); // Update every second
 // Event listeners
-document.getElementById('goldenBall').addEventListener('click', activateGoldenBall);
-document.getElementById('clickericon').addEventListener('click', moreU)
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('goldenBall').addEventListener('click', activateGoldenBall);
+  document.getElementById('clickericon').addEventListener('click', moreU);
+});

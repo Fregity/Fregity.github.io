@@ -55,10 +55,10 @@ button.styled:hover {
   z-index: 10;
 }
 
-/* building fade-in */
+/* fade-in */
 
 .hidden {
-  display: none !important;
+  display: none;
 }
 
 .fade-in {
@@ -73,4 +73,68 @@ button.styled:hover {
   }
 }
 
-/* end building fade-in */
+/* bowling ball */
+
+#goldenBall {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-image: url('Pictures/bowlingball.png');
+  background-size: cover;
+  z-index: 1000;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  opacity: 0;
+  animation: spin 1s linear infinite; /* This makes the ball spin */
+  transform: scale(0.5) rotate(0deg);
+}
+
+#goldenBall.spin {
+  animation: spin 1s linear infinite;
+}
+
+#goldenBall.show {
+  opacity: 1;
+  transform: scale(1.2) rotate(0deg);
+}
+
+#goldenBall.hidden {
+  opacity: 0;
+  transform: scale(0.5) rotate(0deg);
+  pointer-events: none;
+}
+
+@keyframes spin {
+  from { transform: scale(1) rotate(0deg); }
+  to { transform: scale(1) rotate(360deg); }
+}
+
+/* end fade-in */
+
+/* bowling ball text */ 
+#bonusText {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+  text-shadow: 0 0 5px black;
+  z-index: 1001;
+  opacity: 0; /* Start hidden */
+  transition: opacity 1s ease; /* Smooth fade-in and fade-out */
+}
+
+#bonusText.show {
+  opacity: 1; /* Fade in */
+}
+
+#bonusText.fade-out {
+  opacity: 0; /* Fade out */
+}
+
+
+/* end bowling ball text */
