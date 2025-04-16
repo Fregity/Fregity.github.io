@@ -237,7 +237,7 @@ function giveFartBonus() {
 }
 
 function scheduleGoldenBall() {
-  const delay = 1000 + Math.random() * 12000; // 3 to 5 minutes 180000, 120000
+  const delay = 1000 + Math.random() * 12000; // for 3 to 5 minutes should be 180000, 120000, atm made it shorter for testing
   setTimeout(() => {
     spawnGoldenBall();
     scheduleGoldenBall(); // schedule next one after this
