@@ -25,6 +25,7 @@ let costOfToilets = 10000;
 let bathrooms = 0;
 let costOfBathroom = 25000;
 
+let globalProductionMultiplier = 1;
 let burritoMultiplier = 1;
 let toiletMultiplier = 1;
 let bathroomMultiplier = 1;
@@ -33,7 +34,7 @@ let bathroomMultiplier = 1;
 // updates ui of current values
 function update() {
   document.getElementById('farts').innerHTML = "Farts: "+farts.toString();
-  fps = (getProductionAmount("burrito")) + (getProductionAmount("toilet")) + (getProductionAmount("bathroom"));
+  let fps = (getProductionAmount("burrito") + getProductionAmount("toilet") + getProductionAmount("bathroom")) * globalProductionMultiplier;
   document.getElementById('fpc').innerHTML = "Farts per Click: " + fpc;
   document.getElementById('fps').innerHTML = "Farts per Second: " + fps;
   document.getElementById('buyFpcBtn').innerText = `Buy (Placeholder) (${costOfFpc} farts)`;
@@ -168,6 +169,61 @@ function cycleImage() {
   currentImageIndex = (currentImageIndex + 1) % imageSources.length;
   document.getElementById('clickericon').src = imageSources[currentImageIndex];
 }
+
+
+// golden ball
+function spawnGoldenBall() {
+	const goldenBall = document.getElementById('goldenBall');
+	const maxX = window.innerWidth - 60;
+	const maxY = window.innerHeight - 60;
+	const x = Math.random() * maxX;
+	const y = Math.random() * maxY;
+
+	goldenBall.style.left = `${x}px`;
+	goldenBall.style.top = `${y}px`;
+	goldenBall.classList.remove('hidden');
+
+	setTimeout(() => {
+		goldenBall.classList.add('hidden');
+	}, 10000); // disappears after 10 seconds if not clicked
+} 
+function activateGoldenBall() { // when clicked
+	document.getElementById('bowlingSound').play();
+	document.getElementById('goldenBall').classList.add('hidden');
+
+	const boostType = Math.random();
+	if (boostType < 0.2) {
+		activateProductionBoost();
+	} else {
+		giveFartBonus();
+	}
+}
+function activateProductionBoost() {
+  globalProductionMultiplier = 3;
+  update();
+  setTimeout(() => {
+    globalProductionMultiplier = 1;
+    update();
+  }, 60000);
+}
+
+function giveFartBonus() {
+	const bonus = Math.floor(farts * 0.15); // 15% of balance
+	farts += bonus;
+	update();
+}
+
+function scheduleGoldenBall() {
+  const delay = 180000 + Math.random() * 120000; // 3 to 5 minutes
+  setTimeout(() => {
+    spawnGoldenBall();
+    scheduleGoldenBall(); // schedule next one after this
+  }, delay);
+}
+
+// Call this once on page load
+scheduleGoldenBall();
+
 // adds farts every second
 async function rec() {
   await new Promise(resolve => setTimeout(resolve, 1000));
@@ -192,7 +248,7 @@ function checkBathroomUnlock() {
   }
 }
 
-rec(); // dont think this does anything
+rec(); // chatgpt said it runs the production loop, idk what that means but it works
 function getBuildingCost(baseCost, amountOwned, multiplier = 1.1) { // Scales by 10%
   return Math.floor(baseCost * Math.pow(multiplier, amountOwned));
 }
@@ -218,4 +274,6 @@ function increasePrice(which) {
 
 // Call update regularly
 setInterval(update, 1000); // Update every second
+// Event listeners
+document.getElementById('goldenBall').addEventListener('click', activateGoldenBall);
 document.getElementById('clickericon').addEventListener('click', moreU)
