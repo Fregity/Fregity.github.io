@@ -1,3 +1,4 @@
+// defines variables 
 let startTime = Date.now();
 
 let currentImageIndex = 0;
@@ -54,22 +55,22 @@ function update() {
   checkBathroomUnlock();
 }
 
-// how much each should make
-function getProductionAmount(which) {
-  if (which === "burrito") {
-    return Math.floor(burritosBought * burritoMultiplier);
-  } else if (which === "fpc") {
-    return Math.floor(1);
-  } else if (which === "toilet") {
-    return Math.floor(100 * (toiletsBought * toiletMultiplier));
-  } else if (which === "bathroom") {
-    return Math.floor(250 * (bathroomsBought * bathroomMultiplier));
+// logic for upgrade buttons 
+function getProductionAmount(which) { 
+  if (which === "burrito") { // if burrito is pressd 
+    return Math.floor(burritosBought * burritoMultiplier); //return burrito bought * burrito multiplier
+  } else if (which === "fpc") { // if fpc is pressed 
+    return Math.floor(1); // return 1? idk what this does lol (I didn't write this part of code) 
+  } else if (which === "toilet") { // if toilet is pressed 
+    return Math.floor(100 * (toiletsBought * toiletMultiplier)); // return toilets bought * toilet multiplier
+  } else if (which === "bathroom") { // if bathroom is pressed
+    return Math.floor(250 * (bathroomsBought * bathroomMultiplier));  // return bathrooms bought * bathroom multiplier
   }
 
-  return 0; // fallback in case of a typo
+  return 0; // fallback to prevent an error from being flagged 
 }
 
-// buy buildings
+// logic to buy buildings
 function buyFpc() {
   if (farts >= costOfFpc) {
     fpc += getProductionAmount("fpc");
@@ -78,7 +79,7 @@ function buyFpc() {
   }
   update();
 }
-
+// logic to buy burritos 
 function buyBurrito() {
   if (farts >= costOfBurrito) {
     burrito += getProductionAmount("burrito");
@@ -87,7 +88,7 @@ function buyBurrito() {
   }
   update();
 }
-
+ // logic to buy toilets
 function buyToilet() {
   if (farts >= costOfToilets) {
     toilets += getProductionAmount("toilet");
@@ -96,7 +97,7 @@ function buyToilet() {
   }
   update();
 }
-
+// logic to buy bathrooms 
 function buyBathroom() {
   if (farts >= costOfBathroom) {
     bathrooms += getProductionAmount("bathroom");
@@ -106,7 +107,7 @@ function buyBathroom() {
   update();
 }
 
-// buy upgrades
+// logic to buy upgrades
 function buyBurritoUpgrade() {
   if (farts >= 2500 && !moreIngredients) {
     farts -= 2500;
@@ -199,11 +200,11 @@ function activateGoldenBall() { // When clicked
   document.getElementById('bowlingSound').play();
   document.getElementById('goldenBall').classList.add('hidden');
   
-  if (Math.random() < 0.2) {
+  if (Math.random() < 0.2) { //  20% chance of giving 3x boost 
     activateProductionBoost();
     showBonusText("🔥 3x Production Boost!");
   } else {
-    giveFartBonus();
+    giveFartBonus(); // else give bonus farts 
     showBonusText("💨 Bonus Farts!");
   }
 }
@@ -237,7 +238,7 @@ function giveFartBonus() {
 }
 
 function scheduleGoldenBall() {
-  const delay = 1000 + Math.random() * 12000; // for 3 to 5 minutes should be 180000, 120000, atm made it shorter for testing
+  const delay = 180000 + Math.random() * 120000; // for 3 to 5 minutes should be 180000, 120000, atm made it shorter for testing
   setTimeout(() => {
     spawnGoldenBall();
     scheduleGoldenBall(); // schedule next one after this
@@ -273,7 +274,7 @@ function checkBathroomUnlock() {
   }
 }
 
-rec(); // chatgpt said it runs the production loop, idk what that means but it works
+rec(); // dont know what this does but it makes it update smoother
 function getBuildingCost(baseCost, amountOwned, multiplier = 1.1) { // Scales by 10%
   return Math.floor(baseCost * Math.pow(multiplier, amountOwned));
 }
