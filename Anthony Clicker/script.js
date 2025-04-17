@@ -160,11 +160,12 @@ document.getElementById('muteButton').addEventListener('click', () => {
   document.getElementById('muteButton').textContent = effectsMuted ? '🔇 Unmute Farts' : '🔊 Mute Farts';
 });
 
-// change anthony icon
+// change anthony icon 
 const imageSources = [
   "pictures/anthony.jpg",
   "pictures/anthony2.jpg",
-  "pictures/anthony3.jpg"
+  "pictures/anthony3.jpg",
+  "pictures/anthony4.jpg"
 ];
 function cycleImage() {
   currentImageIndex = (currentImageIndex + 1) % imageSources.length;
