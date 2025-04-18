@@ -38,3 +38,7 @@ Nick - v0.2.1 minor ui changes and consistency between buttons
 4/16/25
 
 Nick - v0.3.0 added golden bowling ball and changed scaling of prices
+
+4/17/25
+
+Nick - v0.4.0 added save game feature

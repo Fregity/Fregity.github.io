@@ -1,5 +1,6 @@
 // defines variables 
 let startTime = Date.now();
+let timePlayed = 0; // in seconds
 
 let currentImageIndex = 0;
 let effectsMuted = false;
@@ -34,7 +35,7 @@ let bathroomMultiplier = 1;
 
 // updates ui of current values
 function update() {
-  document.getElementById('farts').innerHTML = "Farts: "+farts.toString();
+  document.getElementById('farts').innerHTML = "Farts: " + farts.toString();
   fps = (getProductionAmount("burrito") + getProductionAmount("toilet") + getProductionAmount("bathroom")) * globalProductionMultiplier;
   document.getElementById('fpc').innerHTML = "Farts per Click: " + fpc;
   document.getElementById('fps').innerHTML = "Farts per Second: " + fps;
@@ -42,15 +43,15 @@ function update() {
   document.getElementById('buyBurritoBtn').innerText = `Buy Burrito (${costOfBurrito} farts)`;  
   document.getElementById('buyToiletBtn').innerText = `Buy Toilet (${costOfToilets} farts)`;
   document.getElementById('buyBathroomBtn').innerText = `Buy Bathroom (${costOfBathroom} farts)`;
-  let currentTime = Date.now();
-  let elapsedTime = currentTime - startTime; // Elapsed time in milliseconds
-  let seconds = Math.floor(elapsedTime / 1000); // Convert to seconds
-  let minutes = Math.floor(seconds / 60); // Convert to minutes
-  let hours = Math.floor(minutes / 60); // Converts to hours
-  seconds = seconds % 60; // Remaining seconds
-  minutes = minutes % 60; // Remaining minutes
-  // Display the elapsed time in minutes and seconds
-  document.getElementById('timePlayed').innerHTML = `Time Wasted: ${hours}h ${minutes}m ${seconds}s`;
+
+  function formatTime(seconds) {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hrs}h ${mins}m ${secs}s`;
+  }
+  
+  document.getElementById('timePlayed').innerHTML = `Time Wasted: ${formatTime(timePlayed)}`;
   checkToiletUnlock();
   checkBathroomUnlock();
 }
@@ -239,7 +240,7 @@ function giveFartBonus() {
 }
 
 function scheduleGoldenBall() {
-  const delay = 180000 + Math.random() * 120000; // for 3 to 5 minutes should be 180000, 120000, atm made it shorter for testing
+  const delay = 180000 + Math.random() * 120000; // for 3 to 5 minutes should be 180000, 120000
   setTimeout(() => {
     spawnGoldenBall();
     scheduleGoldenBall(); // schedule next one after this
@@ -254,6 +255,7 @@ async function rec() {
   await new Promise(resolve => setTimeout(resolve, 1000));
   farts += fps;
   totalFarts += fps;
+  timePlayed += 1; // Increment time played every second
   update();
   requestAnimationFrame(rec);
 }
@@ -278,6 +280,7 @@ function checkBathroomUnlock() {
 rec(); // dont know what this does but it makes it update smoother
 function getBuildingCost(baseCost, amountOwned, multiplier = 1.1) { // Scales by 10%
   return Math.floor(baseCost * Math.pow(multiplier, amountOwned));
+  timePlayed += 1; // Increment time played every second
 }
 
 // increasing price gradually by 2%
@@ -296,13 +299,96 @@ function increasePrice(which) {
     return getBuildingCost(25000, bathroomsBought, 1.02)
   }
 }
+// time saving function for time played
+function formatTime(seconds) {
+  const hrs = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  return `${hrs}h ${mins}m ${secs}s`;
+}
+
+// checks to see if sounds are muted
+document.getElementById('muteButton').addEventListener('click', () => {
+  effectsMuted = !effectsMuted;
+  localStorage.setItem("effectsMuted", JSON.stringify(effectsMuted)); // Persist mute state
+  document.getElementById('muteButton').textContent = effectsMuted ? '🔇 Unmute Farts' : '🔊 Mute Farts';
+});
+
+// save game function, make sure to add variables to this list if you add more
+function saveGame() {
+  const saveData = {
+    effectsMuted,
+    timePlayed,
+    currentImageIndex,
+    farts,
+    totalFarts,
+    fpc,
+    fpcBought,
+    burritosBought,
+    toiletsBought,
+    bathroomsBought,
+    costOfFpc,
+    costOfBurrito,
+    costOfToilets,
+    costOfBathroom,
+    moreIngredients,
+    improvedSeats,
+    globalProductionMultiplier,
+    burritoMultiplier,
+    toiletMultiplier,
+    bathroomMultiplier
+  };
+  localStorage.setItem('fartGameSave', JSON.stringify(saveData));
+  const msg = document.getElementById('saveMessage');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 2000); // hides after 2 seconds
+}
+
+function loadGame() {
+  const save = localStorage.getItem('fartGameSave');
+  if (!save) return;
+  const data = JSON.parse(save);
+
+  effectsMuted = data.effectsMuted ?? false;
+  document.getElementById('muteButton').textContent = effectsMuted ? '🔇 Unmute Farts' : '🔊 Mute Farts';
+  timePlayed = data.timePlayed ?? 0;
+  currentImageIndex = data.currentImageIndex ?? currentImageIndex;
+  document.getElementById('clickericon').src = imageSources[currentImageIndex];
+  farts = data.farts ?? farts;
+  totalFarts = data.totalFarts ?? totalFarts;
+  fpc = data.fpc ?? fpc;
+  fpcBought = data.fpcBought ?? fpcBought;
+  burritosBought = data.burritosBought ?? burritosBought;
+  toiletsBought = data.toiletsBought ?? toiletsBought;
+  bathroomsBought = data.bathroomsBought ?? bathroomsBought;
+  costOfFpc = data.costOfFpc ?? costOfFpc;
+  costOfBurrito = data.costOfBurrito ?? costOfBurrito;
+  costOfToilets = data.costOfToilets ?? costOfToilets;
+  costOfBathroom = data.costOfBathroom ?? costOfBathroom;
+  moreIngredients = data.moreIngredients ?? moreIngredients;
+  improvedSeats = data.improvedSeats ?? improvedSeats;
+  globalProductionMultiplier = data.globalProductionMultiplier ?? globalProductionMultiplier;
+  burritoMultiplier = data.burritoMultiplier ?? burritoMultiplier;
+  toiletMultiplier = data.toiletMultiplier ?? toiletMultiplier;
+  bathroomMultiplier = data.bathroomMultiplier ?? bathroomMultiplier;
+
+  update();
+}
 
 
 
 // Call update regularly
 setInterval(update, 1000); // Update every second
+setInterval(saveGame, 30000); // Auto-save every 30 sec
 // Event listeners
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('goldenBall').addEventListener('click', activateGoldenBall);
   document.getElementById('clickericon').addEventListener('click', moreU);
+  document.getElementById('muteButton').addEventListener('click', () => {
+    effectsMuted = !effectsMuted;
+    document.getElementById('muteButton').textContent = effectsMuted ? '🔇 Unmute Farts' : '🔊 Mute Farts';
+  });
+  document.getElementById('saveButton').addEventListener('click', saveGame);
 });
+
+loadGame(); // Load save game on startup
