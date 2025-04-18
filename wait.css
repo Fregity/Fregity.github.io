@@ -2,3 +2,13 @@ body {
     text-align: center;
     font-family:'Courier New', Courier, monospace;
 }
+
+button {
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    font-size: 1.2rem;
+    margin-top: 5px;
+}
